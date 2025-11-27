@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Laporan Member Gym</title>
+  <style>
+    :root {
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 24px 32px;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* ====== HEADER LAPORAN ====== */
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #999;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+    }
+
+    /* container logo + teks */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    /* gambar logo bulat */
+    .logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .logo-text strong {
+      display: block;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .logo-text {
+      line-height: 1.2;
+    }
+
+    .report-title {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #555;
+    }
+
+    /* ====== FORM INPUT ====== */
+    .form-section {
+      margin-bottom: 24px;
+      padding: 16px;
+      background: #fafafa;
+      border-radius: 8px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .form-field {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+    }
+
+    .form-field label {
+      margin-bottom: 4px;
+      color: #444;
+    }
+
+    .form-field input {
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .btn-row {
+      margin-top: 8px;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 6px 14px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #007bff;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    /* ====== TABEL LAPORAN ====== */
+    .table-section h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead {
+      background: #e9ecef;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* ====== PRINT STYLE ====== */
+    @media print {
+      body {
+        background: white;
+      }
+      .page {
+        box-shadow: none;
+        margin: 0;
+        width: 100%;
+        max-width: none;
+      }
+      .form-section,
+      .btn-row-print {
+        display: none !important; 
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER PDF -->
+  <div class="report-header">
+    <div class="brand">
+      <div class="logo">
+        <img src="gym.jpg" class="logo-img" alt="Logo Gym">
+        <div class="logo-text">
+          <strong>GYM MATE</strong>
+          Your Fitness Partner
+        </div>
+      </div>
+    </div>
+    <div class="report-title">
+      LAPORAN MEMBER GYM
+    </div>
+  </div>
+
+  <!-- FORM INPUT MEMBER -->
+  <div class="form-section">
+    <h3 style="margin-top:0;">Input Data Member (untuk laporan)</h3>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="nama">Nama</label>
+        <input type="text" id="nama" placeholder="Nama member">
+      </div>
+      <div class="form-field">
+        <label for="telepon">Telepon</label>
+        <input type="text" id="telepon" placeholder="08xxxx">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label for="alamat">Alamat</label>
+        <input type="text" id="alamat" placeholder="Alamat">
+      </div>
+      <div class="form-field">
+        <label for="durasi">Durasi Member</label>
+        <input type="text" id="durasi" placeholder="contoh: 3 bulan">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="tambahMember()">Tambah ke Laporan</button>
+      <button class="btn-secondary" onclick="resetForm()">Reset Form</button>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <h3>Daftar Member</h3>
+    <table id="tabel-member">
+      <thead>
+        <tr>
+          <th class="text-center">No</th>
+          <th>Nama</th>
+          <th>Telepon</th>
+          <th>Alamat</th>
+          <th>Durasi Member</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+      </tbody>
+    </table>
+  </div>
+
+  <div class="btn-row btn-row-print" style="margin-top:16px;">
+    <button class="btn-secondary" onclick="window.print()">Cetak / Simpan PDF</button>
+    <button class="btn-danger" onclick="hapusSemua()">Hapus Semua Baris</button>
+  </div>
+
+</div>
+
+  <!-- JavaScript -->
+<script>
+  let dataMember = [];
+
+  function tambahMember() {
+    const nama    = document.getElementById('nama').value.trim();
+    const telp    = document.getElementById('telepon').value.trim();
+    const alamat  = document.getElementById('alamat').value.trim();
+    const durasi  = document.getElementById('durasi').value.trim();
+
+    if (!nama || !telp || !alamat || !durasi) {
+      alert('Lengkapi semua data terlebih dahulu.');
+      return;
+    }
+
+    dataMember.push({ nama, telp, alamat, durasi });
+    renderTabel();
+    resetForm();
+  }
+
+  function renderTabel() {
+    const tbody = document.querySelector('#tabel-member tbody');
+    tbody.innerHTML = ''; 
+
+    dataMember.forEach((m, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="text-center">${index + 1}</td>
+        <td>${m.nama}</td>
+        <td>${m.telp}</td>
+        <td>${m.alamat}</td>
+        <td>${m.durasi}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function resetForm() {
+    document.getElementById('nama').value = '';
+    document.getElementById('telepon').value = '';
+    document.getElementById('alamat').value = '';
+    document.getElementById('durasi').value = '';
+    document.getElementById('nama').focus();
+  }
+
+  function hapusSemua() {
+    if (!confirm('Hapus semua data member di laporan?')) return;
+    dataMember = [];
+    renderTabel();
+  }
+</script>
+
+</body>
+</html>
