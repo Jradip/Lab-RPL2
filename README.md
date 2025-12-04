@@ -3,7 +3,7 @@
 Aplikasi **Laporan Member Gym** adalah project sederhana berbasis **HTML, CSS, dan JavaScript** untuk mencatat data member gym secara cepat dan rapi dalam bentuk tabel.
 
 ---
-s
+
 ## ✨ Fitur
 
 - Form input data member (Nama, Telepon, Alamat, Durasi Member)
